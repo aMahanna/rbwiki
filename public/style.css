@@ -1,0 +1,130 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 125%;
+  line-height: 125%;
+  font-family: system-ui;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+button, input, label {
+  font-size: 100%;
+  line-height: 100%;
+  display: block;
+  margin: 1.5em 0;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1em;
+  margin: 1em 10px 0;
+  display: inline-block;
+  font-size: 105%;
+
+}
+
+#site-title h1 {
+  margin: 0;
+  line-height: 110%;
+}
+
+#site-title a {
+  text-decoration: none;
+  color: black;
+}
+
+#camera-label {
+  cursor: pointer;
+}
+
+#camera-image {
+  width: 50px;
+}
+
+#camera-label-text {
+  width: 100%;
+  display: block;
+}
+
+#cover-form {
+  margin-top: 1em;
+  padding: 1em;
+}
+
+.box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+  display: none;
+}
+
+#cover-form.has-advanced-upload {
+  background-color: white;
+  border-radius: 5px;
+  outline-offset: -10px;
+}
+
+#cover-form.has-advanced-upload .box__dragndrop {
+  display: inline;
+}
+
+#cover-form.is-dragover {
+  background-color: #e9d1f9;
+}
+
+
+#vinyl {
+  display: none;
+}
+
+#vinyl > .rotate {
+  margin-top: 20px;
+  width: 50px;
+  border-radius: 50%;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#gv-card p {
+  margin: 0;
+}
+
+.accordion {
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+  line-height: 130%;
+  font-size: 110%;
+}
+
+.accordion:after {
+  background-color: #f8f8f8;
+  content: '\002B';
+  content: "\2212";
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  background-color: #f8f8f8;
+  content: '\002B';
+}

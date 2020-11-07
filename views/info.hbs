@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <body>
+
+      <div class="card" id="gv-card">
+        <p>
+          <strong>Google Vision's Guess:</strong> "{{googleVisionGuess}}"
+        </p>
+      </div>
+
+      <div class="card" id="gv-card">
+        <p>
+          <strong>Wiki Search's Guess:</strong> "{{wikiTitle}}"
+        </p>
+      </div>
+      
+      <button class="accordion"><strong>Summary</strong></button>
+      <div class="card" id="gv-card">
+        <p>{{wikiSummary}}</p>
+      </div>
+      
+      <div>
+        {{#each wikiContent}}
+          <button class="accordion"><strong>{{this.title}}</strong></button>
+          <div class="card" id="gv-card">
+            <p>{{this.content}} <a href={{this.url}} target="_blank"> <strong>(...)</strong></a></p>
+          </div>
+        {{/each}}
+      </div>
+      
+      <div class="card" id="gv-card">
+        <p> <a href={{wikiUrl}} target="_blank">source</a></p>
+      </div>
+
+      <div class="card" id="info-card">
+        <a href="/">encore</a>
+      </div>
+
+      <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+        for (i = 0; i < acc.length; i++) {
+          acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "none") {
+              panel.style.display = "block";
+            } else {
+              panel.style.display = "none";
+            }
+          });
+        }
+      </script>
+  </body>
+</html>
+
