@@ -6,13 +6,11 @@
         <p>
           <strong>Google Vision's Guess:</strong> "{{googleVisionGuess}}"
         </p>
-      </div>
-
-      <div class="card" id="gv-card">
         <p>
-          <strong>Wiki Search's Guess:</strong> "{{wikiTitle}}"
+          <strong>Wiki Search's Guess:</strong> "<a href={{wikiUrl}} target="_blank"> {{wikiTitle}} </a>" 
         </p>
       </div>
+
       
       <button class="accordion"><strong>Summary</strong></button>
       <div class="card" id="gv-card">
@@ -26,14 +24,6 @@
             <p>{{this.content}} <a href={{this.url}} target="_blank"> <strong>(...)</strong></a></p>
           </div>
         {{/each}}
-      </div>
-      
-      <div class="card" id="gv-card">
-        <p> <a href={{wikiUrl}} target="_blank">source</a></p>
-      </div>
-
-      <div class="card" id="info-card">
-        <a href="/">encore</a>
       </div>
 
       <script>
@@ -51,6 +41,10 @@
           });
         }
       </script>
+      
+      <div>
+           
+      </div>
   </body>
 </html>
 

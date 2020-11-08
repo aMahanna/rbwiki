@@ -81,8 +81,8 @@ async function getWikiSummary(resultTitle) {
   if (wikiSummary) {
     return shortenText(wikiSummary, 5);
   } else { 
-    return "unable to fetch wiki summary (MediaWiki API uncooperative)";
-  } 
+    return "unable to fetch wiki summary (WikiJs Package uncooperative)";
+  }
 }
 
 async function getWikiImage(resultTitle) {

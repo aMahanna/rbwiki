@@ -16,8 +16,7 @@
     "uuid": "^3.2.1",
     "request-promise": "^4.2.5",
     "node-fetch": "^2.6.0",
-    "wikijs": "^6.0.1",
-    "slick-carousel": "1.8.1"
+    "wikijs": "^6.0.1"
   },
   "engines": {
     "node": "8.x"

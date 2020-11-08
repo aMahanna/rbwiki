@@ -23,17 +23,19 @@ var apiResponse;
 
 app.use(express.static('public'));
 
-// Camera is default view
 app.get('/', (req, res) => {
-  res.render('camera', {
-    analyticsUrl: process.env.ANALYTICS_URL
-  });
+  res.render('intro', {});
+});
+
+// Camera is default view
+app.get('/about', (req, res) => {
+  res.render('about', {});
 });
 
 // This route works for both the async request from the frontend
 // or as a form submittion if the fancy uploader doesn't work (no js).
 // At the end the image is deleted from the server
-app.post('/info', upload.single('file'), async function(req, res) {
+app.post('/content', upload.single('file'), async function(req, res) {
   var imagePath = false;
   if (req.file && req.file.filename) {
     imagePath = '/images/' + req.file.filename; 
@@ -62,7 +64,7 @@ app.post('/info', upload.single('file'), async function(req, res) {
         googleVisionGuess: apiResponse.gvBestGuess,
       });
     } else {
-      res.render('info', {
+      res.render('content', {
         googleVisionGuess: apiResponse.gvBestGuess,
         analyticsUrl: process.env.ANALYTICS_URL
       });
@@ -87,10 +89,10 @@ app.post('/info', upload.single('file'), async function(req, res) {
 
 });
 
-// Once the async apiManager request returns, frontend redirects to info
-app.get('/info', function(req,res) {
+// Once the async apiManager request returns, frontend redirects to content
+app.get('/content', function(req,res) {
   if (req.query.googleVisionGuess) {
-    res.render('info', {
+    res.render('content', {
       background: apiResponse.wiki.image,
       wikiTitle: apiResponse.wiki.title,
       wikiUrl: apiResponse.wiki.url,

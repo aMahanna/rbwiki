@@ -17,7 +17,7 @@ function submitCoverForm(file) {
   formData.append('async', true);
 
   jQuery.ajax({
-    url: 'info',
+    url: 'content',
     data: formData,
     cache: false,
     contentType: false,
@@ -25,7 +25,7 @@ function submitCoverForm(file) {
     type: 'POST',
     success: function(data){
       if (!data.error) {
-        window.location.replace('info?googleVisionGuess=' + data.googleVisionGuess);
+        window.location.replace('content?googleVisionGuess=' + data.googleVisionGuess);
       } else {
         window.location.replace('error');
       }
@@ -33,10 +33,8 @@ function submitCoverForm(file) {
   });
 }
 
-// This is code to make the drag and drop work
-// Which I got from here:
-// https://css-tricks.com/drag-and-drop-file-uploading/
-// and is slightly modified.
+// drag and drop feature
+// source: https://css-tricks.com/drag-and-drop-file-uploading/
 var isAdvancedUpload = function() {
   var div = document.createElement('div');
   return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
@@ -74,3 +72,26 @@ if (isAdvancedUpload) {
     }
   });
 }
+
+$(document).ready(function(){
+    $('.upload-samples').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2500,
+        arrows: false,
+        dots: false,
+        pauseOnHover: false,
+        responsive: [{
+            breakpoint: 768,
+            settings: {
+                slidesToShow: 4
+            }
+        }, {
+            breakpoint: 520,
+            settings: {
+                slidesToShow: 3
+            }
+        }]
+    });
+});
