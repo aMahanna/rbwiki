@@ -6,6 +6,8 @@ const ignoredWords = [
   '[vinyl]',
   'usa',
   'import',
+  'hd',
+  '[hd]',
   'lp',
   '[lp]',
   'cd',
