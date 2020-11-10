@@ -15,7 +15,7 @@ const fs = require('fs');
 const uuidv4 = require('uuid/v4');
 
 const projectUrl = 'https://' + process.env.PROJECT_DOMAIN + '.glitch.me';
-const apiManager = require('./apiManager');
+const apiManager = require('./src/apiManager');
 
 var apiResponse;
 
