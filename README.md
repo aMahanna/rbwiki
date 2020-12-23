@@ -2,13 +2,12 @@
 
 A live demo can be found [here](http://rubeswiki.glitch.me/).
 
-This is a <a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Rube Goldberg Machine</a> of the <a href="https://cloud.google.com/vision/">Google Cloud Vision API</a> and the <a href="https://www.mediawiki.org/wiki/API:Main_page">MediaWiki API</a>. After uploading an image, the Google Vision API will fetch the most relevant key words associated to that image. The app will then search Wikipedia using Google's result, and give you the first condensed Wiki page for a quick read.
+Built with Express, using Javscript, HTML, CSS and Handlebars 
 
-In theory, this can also work with other things like a book cover for example (assuming there is a Wikipedia page for it). It doesn't have to be LP record albums, but use at your own risk.
+This is a <a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Rube Goldberg Machine</a> of the <a href="https://cloud.google.com/vision/">Google Cloud Vision API</a> and the <a href="https://www.mediawiki.org/wiki/API:Main_page">MediaWiki API</a>. 
+
+It was originally intended for taking pictures of LP Records and getting condensed Wiki info about their album & band, but it can work with other things, like a book cover. 
 
 You will need the following to make your own:
-
 - [Google Cloud API Key](https://cloud.google.com/docs/authentication/api-keys) (this is set as GCP_API_KEY ENV variable)
 
-
-Built with Express, using Javscript, HTML, CSS and Handlebars 

@@ -32,14 +32,10 @@ async function handleSubmit(searchQuery) {
   
   /*                             Image                                  */ 
   this.wiki.image = await getWikiImage(this.wiki.title);
-  
-  //await sleep(1000); 
-  
+    
   /*                             Summary                                  */ 
   this.wiki.summary = await getWikiSummary(this.wiki.title); 
   
-  //await sleep(4000); 
-
   /*                             Content                                  */ 
   this.wiki.content = await getWikiContent(this.wiki.title, this.wiki.url);  
   console.log("fin");
