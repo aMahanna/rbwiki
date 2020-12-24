@@ -12,4 +12,4 @@ You will need the following to make your own:
 - [Google Cloud API Key](https://cloud.google.com/docs/authentication/api-keys) (this is set as GCP_API_KEY ENV variable)
 
 
-![menu](imgs/menu.jpg)
+![menu](imgs/menu.png)
