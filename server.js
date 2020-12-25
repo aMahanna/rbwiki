@@ -2,6 +2,7 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var app = express();
 const hbs = require("hbs");
+const dotenv = require('dotenv');
 app.use(cookieParser());
 app.set("view engine", "hbs");
 app.set("views", "views");
@@ -9,16 +10,13 @@ hbs.registerPartials(__dirname + '/views/partials/');
 
 var multer  = require('multer');
 var upload = multer({ dest: __dirname + '/public/images/' });
-const querystring = require('querystring');
-const url = require('url');
 const fs = require('fs');
-const uuidv4 = require('uuid/v4');
 
-const projectUrl = 'https://' + process.env.PROJECT_DOMAIN + '.glitch.me';
 const apiManager = require('./src/apiManager');
 
 var apiResponse;
 
+dotenv.config();
 /* Routes */
 
 app.use(express.static('public'));
@@ -81,7 +79,7 @@ app.post('/content', upload.single('file'), async function(req, res) {
   }
   if (imagePath) {
     try {
-      fs.unlinkSync('/app/public' + imagePath);
+      fs.unlinkSync(__dirname + '/public' + imagePath);
     } catch (err) {
       console.log('error deleting ' + imagePath + ': ' + err);
     }

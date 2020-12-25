@@ -1,6 +1,5 @@
 var requestPromise = require('request-promise');
 
-const projectUrl = 'https://' + process.env.PROJECT_DOMAIN + '.glitch.me';
 const googleVision = require('./googleVision');
 const wiki = require('./wiki');
 const ignoredWords = require('./ignoredWords');

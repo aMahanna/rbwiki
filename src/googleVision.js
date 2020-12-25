@@ -1,3 +1,4 @@
+require('dotenv').config();
 const gcpApiUrl = 'https://vision.googleapis.com/v1/images:annotate?'
 const GCP_API_KEY = process.env.GCP_API_KEY;
 const fs = require('fs');

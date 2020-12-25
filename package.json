@@ -1,28 +1,29 @@
 {
   "name": "rubes-wiki",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Photo-enabled wikipedia searching using Google Vision & Wikijs for LP records",
   "main": "server.js",
   "scripts": {
-    "start": "rm -r -f /app/public/images && mkdir /app/public/images && node server.js"
+    "start": "rm -r -f public/images && mkdir public/images && node server.js"
   },
   "dependencies": {
-    "express": "^4.16.3",
-    "multer": "^1.3.0",
     "body-parser": "^1.18.2",
-    "request": "^2.85.0",
-    "hbs": "^4.0.1",
     "cookie-parser": "^1.4.3",
-    "uuid": "^3.2.1",
-    "request-promise": "^4.2.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.3",
+    "hbs": "^4.0.1",
+    "multer": "^1.3.0",
     "node-fetch": "^2.6.0",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.5",
+    "uuid": "^3.2.1",
     "wikijs": "^6.0.1"
   },
   "engines": {
     "node": "8.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/rubeswiki"
+    "url": "https://github.com/aMahanna/rubeswiki"
   },
   "license": "MIT"
 }
