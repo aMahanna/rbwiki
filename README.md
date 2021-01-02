@@ -1,10 +1,10 @@
 # Rube's Wiki
 
+A <a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Rube Goldberg Machine</a> for accessing condensed Wikipedia page content through photo recognition. 
+
 A live demo can be found [here](http://rubeswiki.glitch.me/).
 
-Built with Express, using Javscript, HTML, CSS and Handlebars 
-
-This is a <a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Rube Goldberg Machine</a> of the <a href="https://cloud.google.com/vision/">Google Cloud Vision API</a> and the <a href="https://www.mediawiki.org/wiki/API:Main_page">MediaWiki API</a>. 
+Built with Express, using Javscript, HTML, CSS, Handlebars, and the Google Cloud Vision & MediaWiki APIs.
 
 It was originally intended for taking pictures of LP Records and getting condensed Wiki info about their album & band, but it can work with other things, like a book cover. 
 
