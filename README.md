@@ -6,7 +6,7 @@ A live demo can be found [here](http://rubeswiki.glitch.me/).
 
 Built with Express, using Javscript, HTML, CSS, Handlebars, and the Google Cloud Vision & MediaWiki APIs.
 
-It was originally intended for taking pictures of LP Records and getting condensed Wiki info about their album & band, but it can work with other things, like a book cover. 
+It was originally intended for taking pictures of LP Records and getting condensed Wiki info about their album & band, but it can work with other things, like a book cover or a famous face. 
 
 You will need the following to make your own:
 - [Google Cloud API Key](https://cloud.google.com/docs/authentication/api-keys) (this is set as GCP_API_KEY ENV variable)
