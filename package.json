@@ -1,6 +1,6 @@
 {
   "name": "rubes-wiki",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Photo-enabled wikipedia searching using Google Vision & Wikijs for LP records",
   "main": "server.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "wikijs": "^6.0.1"
   },
   "engines": {
-    "node": "8.x"
+    "node": "15.5.0"
   },
   "repository": {
     "url": "https://github.com/aMahanna/rubeswiki"
