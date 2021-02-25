@@ -15,4 +15,5 @@ It was originally intended for taking pictures of LP Records and getting condens
 To run:
 - You will need a [Google Cloud API Key](https://cloud.google.com/docs/authentication/api-keys) (set as GCP_API_KEY in your `.env`)
 - `yarn install`
-- `yarn start`
+- `yarn build`
+- `yarn dev`
