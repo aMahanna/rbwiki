@@ -1,6 +1,6 @@
 import requestPromise from 'request-promise';
 
-import getGcpOptions from './googleVision'; 
+import getGcpOptions from './vision'; 
 import handleSubmit from './wiki'; 
 import ignoredWords from './ignoredWords'; 
 
@@ -13,7 +13,6 @@ async function askGoogleVision(data : any, imagePath : string) {
   
   try {
     gcpOptions = await getGcpOptions('./public' + imagePath);
-    console.log('2.1) request options');
     gvGuess = await requestPromise(gcpOptions);
     
   } catch (err) {
@@ -22,7 +21,6 @@ async function askGoogleVision(data : any, imagePath : string) {
   }
   
   data.gvGuess = gvGuess;
-  console.log('3) GVGuess: ', gvGuess);
   checkGoogleVisionGuess(data);
 }
 
@@ -33,7 +31,6 @@ function checkGoogleVisionGuess(data : any) {
   data.gvBestGuess = data.gvGuess.responses[0].webDetection.bestGuessLabels[0].label;
   if (!data.gvBestGuess) {
     throw('No guess from google');
-    return;
   }
   
   ignoredWords.forEach(function(word : any) {
@@ -41,20 +38,16 @@ function checkGoogleVisionGuess(data : any) {
       data.gvBestGuess = data.gvBestGuess.replace(word, "");
     }
   })
-  console.log('4) Passed Check');
   return data;   
 }
 
 async function askMediaWiki(data : any) {
   data.wiki = await handleSubmit(data.gvBestGuess.trim());
-  console.log('5) Passed wiki');
   return data;
 }
 
-async function apiManager(imagePath : string, req : any, res : any) {
+async function apiHandler(imagePath : string, req : any, res : any) {
   let data : any = {};
-  
-  console.log('1)apiManager');
   try {
     await askGoogleVision(data, imagePath);
     await askMediaWiki(data);
@@ -64,9 +57,7 @@ async function apiManager(imagePath : string, req : any, res : any) {
     data.errorMessage = err;
   }
   
-  data.error = false;
-  console.log('6) returning data...');
   return data; 
 }
 
-export default apiManager;
+export default apiHandler;

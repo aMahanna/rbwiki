@@ -14,7 +14,6 @@ function submitCoverForm(file) {
 
   var formData = new FormData();
   formData.append('file', file);
-  formData.append('async', true);
 
   jQuery.ajax({
     url: 'content',

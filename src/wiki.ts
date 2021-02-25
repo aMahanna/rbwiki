@@ -5,117 +5,42 @@ async function handleSubmit(this : any, searchQuery :any) {
   console.log("Wiki search query: ", searchQuery);  
 
   const endpoint = `https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchQuery}`;
-  await fetch(endpoint)
-  		.then(response => response.json())
-  		.then(data => {
-  	  	const results = data.query.search;
-        const result = results[0]; 
-        this.resultTitle = result.title;
-		})
-    .catch(error => console.log('A Wiki Search error occurred: ', error));  
+  const wikiResponse = await fetch(endpoint);
+  const wikiJSON = await wikiResponse.json();
+  const result = wikiJSON.query.search[0];
   
-  console.log("title found: ", this.resultTitle);
+  const wikiObject = await getWiki(result.title);
 
-  this.wiki = {
-    title: "",
-    url: "",
-    image: "",
-    summary: "",
-    content: ""
-  };
-  
-  this.wiki.title = this.resultTitle;
-  
-  /*                             Url                                  */ 
-  this.wiki.url = await getWikiUrl(this.wiki.title);
-  console.log("Wiki URL: ", this.wiki.url);
-  
-  /*                             Image                                  */ 
-  this.wiki.image = await getWikiImage(this.wiki.title);
-    
-  /*                             Summary                                  */ 
-  this.wiki.summary = await getWikiSummary(this.wiki.title); 
-  
-  /*                             Content                                  */ 
-  this.wiki.content = await getWikiContent(this.wiki.title, this.wiki.url);  
   console.log("fin");
-  return this.wiki;
+  return wikiObject; 
 }
 
-async function getWikiUrl(resultTitle : any) {
-  let wikiUrl = await wiki()
-                  .page(resultTitle)
-                  .then((page : any) => page.url())
-                  .catch(() => console.log('Error fetching wiki URL'));
-  
-  if (wikiUrl) {
-    return wikiUrl;
-  } else {
-    return "unable to fetch wiki url";
-  }  
-}
+async function getWiki(resultTitle : any) {
+  let url = await wiki().page(resultTitle).then((page : any) => page.url()).catch(() => console.log('Error fetching wiki URL'));
+  let summary = await wiki().page(resultTitle).then((page : any) => page.summary()).catch((error : any) => console.log('Error fetching wiki SUMMARY: ', error));
+  let imageList = await wiki().page(resultTitle).then((page : any) => page.images()).catch((error : any) => console.log('Error fetching wiki IMAGE LIST: ', error));
+  let image = getValidWikiImage(imageList);
+  let content = await wiki().page(resultTitle).then((page : any) => page.content()).catch((error : any) => console.log('Error fetching wiki CONTENT: ', error));
+  summary = summary ? shortenText(summary, 5) : undefined; 
+  content = content ? parseValidWikiContent(buildValidWikiContent(content), url) : undefined;  
 
-async function getWikiInfo(resultTitle : any) {
-  let wikiInfo = await wiki()
-                  .page(resultTitle)
-                  .then((page : any) => page.info())
-                  .catch((error : any) => console.log('Error fetching wiki INFO: ', error));
-  
-  if (wikiInfo) {
-    return wikiInfo;
-  } else {
-    return "unable to fetch wiki info";
-  }  
-}
-
-async function getWikiSummary(resultTitle : any) {
-  let wikiSummary = await wiki()
-                      .page(resultTitle)
-                      .then((page : any) => page.summary())
-                      .catch((error : any) => console.log('Error fetching wiki SUMMARY: ', error));
-  
-  if (wikiSummary) {
-    return shortenText(wikiSummary, 5);
-  } else { 
-    return "unable to fetch wiki summary (WikiJs Package uncooperative)";
-  }
-}
-
-async function getWikiImage(resultTitle : any) {
-  let wikiImageList = await wiki()
-                      .page(resultTitle)
-                      .then((page : any) => page.images())
-                      .catch((error : any) => console.log('Error fetching wiki IMAGE LIST: ', error));
-  
-  if (wikiImageList) {
-    return getValidWikiImage(wikiImageList);
-  } else {
-    return "unable to fetch wiki image list";
+  return {
+    title: resultTitle, 
+    url: url ? url : "Error Fetching Wiki URL",
+    summary: summary ? summary : "Error Fetching Summary",
+    image: image ? image : "Error Fetching Image",
+    content: content ? content : "Error fetching Wiki Content"
   }
 }
 
 function getValidWikiImage(wikiImageList : any) {
   let extension = '';
-  
   for (let i = 0; i < wikiImageList.length; i++) {
     extension = wikiImageList[i].split(".").slice(-1)[0].toUpperCase(); 
     if (extension === 'JPG' || extension === 'PNG') {
       return wikiImageList[i];
     }
   }
-}
-
-async function getWikiContent(resultTitle : any, url : any) {
-  let rawWikiContent = await wiki()
-                      .page(resultTitle)
-                      .then((page : any) => page.content())
-                      .catch((error : any) => console.log('Error fetching wiki CONTENT: ', error));
-  
-  if (!rawWikiContent) {
-    return "unable to fetch wiki content";
-  }
-  
-  return parseValidWikiContent(buildValidWikiContent(rawWikiContent), url); 
 }
 
 function buildValidWikiContent(rawWikiContent : any) {
@@ -145,7 +70,7 @@ function parseValidWikiContent(validWikiContent : any, url : any) {
          {
            title: validWikiContent[j].title,
            content: shortenText(validWikiContent[j].content, 4),
-           url: url + "#" + getWikiExtension(validWikiContent[j].title)
+           url: url + "#" + validWikiContent[j].title.split(' ').join('_')
          }
        )
       j++;
@@ -174,13 +99,8 @@ function shortenText(originalText : any, maxLength : any) {
   return shortenedText;
 }
 
-function getWikiExtension(title : any) {
-  return title.split(' ').join('_');
-}
-
 function sleep(ms : any) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 export default handleSubmit; 
