@@ -1,20 +1,23 @@
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var app = express();
-const hbs = require("hbs");
-const dotenv = require('dotenv');
+import express from 'express';
+import http from 'http';
+import cookieParser from 'cookie-parser';
+import hbs from 'hbs';
+import dotenv from 'dotenv';
+import multer from 'multer'
+import fs from 'fs';
+
+import apiManager from './src/apiManager';
+
+const app = express();
 app.use(cookieParser());
 app.set("view engine", "hbs");
 app.set("views", "views");
 hbs.registerPartials(__dirname + '/views/partials/');
 
-var multer  = require('multer');
-var upload = multer({ dest: __dirname + '/public/images/' });
-const fs = require('fs');
+let upload = multer({ dest: __dirname + '/public/images/' });
 
-const apiManager = require('./src/apiManager');
 
-var apiResponse;
+let apiResponse : any;
 
 dotenv.config();
 /* Routes */
@@ -34,7 +37,7 @@ app.get('/about', (req, res) => {
 // or as a form submittion if the fancy uploader doesn't work (no js).
 // At the end the image is deleted from the server
 app.post('/content', upload.single('file'), async function(req, res) {
-  var imagePath = false;
+  let imagePath : string = ''; 
   if (req.file && req.file.filename) {
     imagePath = '/images/' + req.file.filename; 
   } else {
@@ -44,7 +47,7 @@ app.post('/content', upload.single('file'), async function(req, res) {
     }
   }
   
-  if (imagePath) {
+  if (imagePath !== '') {
     try {
       apiResponse = await apiManager(imagePath, req, res);
     } catch(e) {
@@ -107,7 +110,7 @@ app.get('/content', function(req,res) {
 });
 
 // General error handling
-function handleError(res, err) {
+function handleError(res : any, err : any) {
   console.log("\nError");
   console.log(JSON.stringify(err));
   res.redirect('/error');
@@ -117,6 +120,5 @@ app.get('/error', function(req, res) {
   
 });
 
-var listener = app.listen(process.env.PORT, function () {
-  console.log('app is listening on port ' + listener.address().port);
-});
+const port = process.env.PORT || 5000; 
+http.createServer(app).listen(port, () => console.log(`Listening on port ${port}`));

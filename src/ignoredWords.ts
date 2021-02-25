@@ -17,6 +17,4 @@ const ignoredWords = [
   'label'
 ];
 
-module.exports = {
-  ignoredWords: ignoredWords
-}
+export default ignoredWords; 

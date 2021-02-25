@@ -1,19 +1,19 @@
-var requestPromise = require('request-promise');
+import requestPromise from 'request-promise';
 
-const googleVision = require('./googleVision');
-const wiki = require('./wiki');
-const ignoredWords = require('./ignoredWords');
-
+import getGcpOptions from './googleVision'; 
+import handleSubmit from './wiki'; 
+import ignoredWords from './ignoredWords'; 
 
 // Data gets passed through googleVision and wiki calls
 // imagePath is the url of the image on the server
-async function askGoogleVision(data, imagePath, mimetype) {
+async function askGoogleVision(data : any, imagePath : string) {
   
-  let gcpOptions;
-  let gvGuess;
+  let gcpOptions : any;
+  let gvGuess : any;
   
   try {
-    gcpOptions = await googleVision.getGcpOptions('./public' + imagePath);
+    gcpOptions = await getGcpOptions('./public' + imagePath);
+    console.log('2.1) request options');
     gvGuess = await requestPromise(gcpOptions);
     
   } catch (err) {
@@ -22,36 +22,39 @@ async function askGoogleVision(data, imagePath, mimetype) {
   }
   
   data.gvGuess = gvGuess;
+  console.log('3) GVGuess: ', gvGuess);
   checkGoogleVisionGuess(data);
 }
 
 // Gets the "best guess" from the Google Vision response object
 // Splits the string into an array to check for words we want to remove
 // ignoredWords.js has a list of words that should be removed (like 'vinyl')
-function checkGoogleVisionGuess(data) {
+function checkGoogleVisionGuess(data : any) {
   data.gvBestGuess = data.gvGuess.responses[0].webDetection.bestGuessLabels[0].label;
   if (!data.gvBestGuess) {
     throw('No guess from google');
     return;
   }
   
-  ignoredWords.ignoredWords.forEach(function(word) {
+  ignoredWords.forEach(function(word : any) {
     if (data.gvBestGuess.includes(word)) {
       data.gvBestGuess = data.gvBestGuess.replace(word, "");
     }
   })
-  
+  console.log('4) Passed Check');
   return data;   
 }
 
-async function askMediaWiki(data) {
-  data.wiki = await wiki.handleSubmit(data.gvBestGuess.trim());
+async function askMediaWiki(data : any) {
+  data.wiki = await handleSubmit(data.gvBestGuess.trim());
+  console.log('5) Passed wiki');
   return data;
 }
 
-async function apiManager(imagePath, req, res) {
-  let data = {};
+async function apiManager(imagePath : string, req : any, res : any) {
+  let data : any = {};
   
+  console.log('1)apiManager');
   try {
     await askGoogleVision(data, imagePath);
     await askMediaWiki(data);
@@ -62,7 +65,8 @@ async function apiManager(imagePath, req, res) {
   }
   
   data.error = false;
+  console.log('6) returning data...');
   return data; 
 }
 
-module.exports = apiManager;
+export default apiManager;

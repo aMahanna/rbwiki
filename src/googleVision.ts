@@ -1,9 +1,9 @@
+import fs from 'fs'; 
 require('dotenv').config();
 const gcpApiUrl = 'https://vision.googleapis.com/v1/images:annotate?'
 const GCP_API_KEY = process.env.GCP_API_KEY;
-const fs = require('fs');
 
-async function getGcpOptions(imageUrl) {
+async function getGcpOptions(imageUrl : any) {
   try {
     var imageData = b64req(imageUrl);
   } catch(error) {
@@ -11,7 +11,6 @@ async function getGcpOptions(imageUrl) {
     console.log(error);
     return;
   }
-  
   return {
     method: 'POST',
     uri: gcpApiUrl + 'key=' + GCP_API_KEY,
@@ -35,13 +34,11 @@ async function getGcpOptions(imageUrl) {
 }
 
 // function to encode file data to base64 encoded string
-function b64req(file) {
+function b64req(file : any) {
   // read binary data
-  let image = fs.readFileSync(file);
+  let image = fs.readFileSync(__dirname + '/../' + file);
   // convert binary data to base64 encoded string
-  return new Buffer(image).toString('base64');
+  return Buffer.from(image).toString('base64');
 }
 
-module.exports = {
-  getGcpOptions: getGcpOptions
-}
+export default getGcpOptions; 
