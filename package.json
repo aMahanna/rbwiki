@@ -4,7 +4,7 @@
   "description": "Photo-enabled wikipedia searching using Google Vision & Wikijs for LP records",
   "main": "server.js",
   "scripts": {
-    "start": "rm -r -f public/images && mkdir public/images && node server.js",
+    "start": "rm -r -f public/images && mkdir public/images && node dist/server.js",
     "dev": "concurrently \"yarn run watch:build\" \"yarn run watch:server\"",
     "watch:build": "tsc --watch",
     "watch:server": "yarn run clean:images && NODE_ENV=test nodemon ./dist/server.js --watch ./dist",
