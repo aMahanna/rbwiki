@@ -18,8 +18,10 @@ async function handleSubmit(this : any, searchQuery :any) {
 async function getWiki(resultTitle : any) {
   let url = await wiki().page(resultTitle).then((page : any) => page.url()).catch(() => console.log('Error fetching wiki URL'));
   let summary = await wiki().page(resultTitle).then((page : any) => page.summary()).catch((error : any) => console.log('Error fetching wiki SUMMARY: ', error));
+  await sleep(2000); // TODO: Remove & find a permanent fix 
   let imageList = await wiki().page(resultTitle).then((page : any) => page.images()).catch((error : any) => console.log('Error fetching wiki IMAGE LIST: ', error));
   let image = getValidWikiImage(imageList);
+  await sleep(2000); // TODO: Remove & find a permanent fix 
   let content = await wiki().page(resultTitle).then((page : any) => page.content()).catch((error : any) => console.log('Error fetching wiki CONTENT: ', error));
   summary = summary ? shortenText(summary, 5) : undefined; 
   content = content ? parseValidWikiContent(buildValidWikiContent(content), url) : undefined;  
