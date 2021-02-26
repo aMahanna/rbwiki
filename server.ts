@@ -2,19 +2,20 @@ import express from 'express';
 import http from 'http';
 import cookieParser from 'cookie-parser';
 import hbs from 'hbs';
-import dotenv from 'dotenv';
 import multer from 'multer'
 import fs from 'fs';
 
 import apiHandler from './src/apiHandler';
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const app = express();
 app.use(cookieParser());
 app.set("view engine", "hbs");
 app.set("views", "views");
 hbs.registerPartials(__dirname + '/views/partials/');
-
-dotenv.config();
 
 app.use(express.static('public'));
 

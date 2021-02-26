@@ -1,5 +1,8 @@
 import fs from 'fs'; 
-require('dotenv').config();
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 const gcpApiUrl = 'https://vision.googleapis.com/v1/images:annotate?'
 const GCP_API_KEY = process.env.GCP_API_KEY;
 
