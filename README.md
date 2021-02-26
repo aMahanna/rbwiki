@@ -4,7 +4,7 @@ A <a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Rube Goldberg Ma
 
 A live demo can be found [here](https://rbwiki.herokuapp.com/).
 
-Built with Express, using Javscript, HTML, CSS, Handlebars, and the Google Cloud Vision & MediaWiki APIs.
+Built with Express, using Typescript, JQuery, Handlebars, HTML, CSS, and the Google Cloud Vision & MediaWiki APIs.
 
 It was originally intended for taking pictures of LP Records and getting condensed Wiki info about their album & band, but it can work with other things, like a book cover or a famous face. 
 
