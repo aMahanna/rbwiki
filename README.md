@@ -2,7 +2,7 @@
 
 A <a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Rube Goldberg Machine</a> for accessing condensed Wikipedia page content through photo recognition. 
 
-A live demo can be found [here](https://rubeswiki.glitch.me/).
+A live demo can be found [here](https://rbwiki.herokuapp.com/).
 
 Built with Express, using Javscript, HTML, CSS, Handlebars, and the Google Cloud Vision & MediaWiki APIs.
 
