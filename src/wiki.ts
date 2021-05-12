@@ -23,8 +23,7 @@ interface wikiObject {
 async function handleSubmit(searchQuery :any) : Promise<wikiObject> {
   console.log("Wiki search query: ", searchQuery);  
 
-  const endpoint = `https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchQuery}`;
-  const wikiResponse = await fetch(endpoint);
+  const wikiResponse = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchQuery}`);
   const wikiJSON = await wikiResponse.json();
   const result = wikiJSON.query.search[0];
   
@@ -34,19 +33,21 @@ async function handleSubmit(searchQuery :any) : Promise<wikiObject> {
 }
 
 async function getWiki(resultTitle : string) {
-  const url = (await wiki().page(resultTitle)).url();
-  const summary = await (await wiki().page(resultTitle)).summary();
-  const imageList = await (await wiki().page(resultTitle)).images();
-  const image = getValidWikiImage(imageList);
-  const content = await (await wiki().page(resultTitle)).content();
+  const page = await wiki().page(resultTitle);
+  const summary = await page.summary();
+  const imageList = await page.images();
+  const content = await page.content();
+  const url = page.url();
+
+  const validImage = getValidWikiImage(imageList);
   const shortenedSummary = summary ? shortenText(summary, 5) : undefined; 
   const parsedContent = content ? parseValidWikiContent(buildValidWikiContent(content), url) : undefined;  
-
+  
   return {
     title: resultTitle, 
     url: url ? url : "Error Fetching Wiki URL",
     summary: shortenedSummary ? shortenedSummary : "Error Fetching Summary",
-    image: image ? image : "Error Fetching Image",
+    image: validImage ? validImage : "Error Fetching Image",
     content: parsedContent ? parsedContent : "Error fetching Wiki Content"
   }
 }

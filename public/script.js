@@ -24,7 +24,7 @@ function submitCoverForm(file) {
     type: 'POST',
     success: function(data){
       if (!data.error) {
-        window.location.replace('content?googleVisionGuess=' + data.googleVisionGuess);
+        window.location.replace('content');
       } else {
         window.location.replace('error');
       }
