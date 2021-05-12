@@ -2,6 +2,8 @@
 
 A <a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Rube Goldberg Machine</a> for accessing condensed Wikipedia page content through photo recognition. 
 
+__Disclaimer: The codebase is very "hacky", it was my attempt at a first side-project, and it's far from being clean...__
+
 A live demo can be found [here](https://rbwiki.herokuapp.com/).
 
 Built with Express, using Typescript, JQuery, Handlebars, HTML, CSS, and the Google Cloud Vision & MediaWiki APIs.

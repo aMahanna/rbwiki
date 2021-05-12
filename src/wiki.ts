@@ -1,7 +1,26 @@
 import fetch from 'node-fetch';
 import wiki from 'wikijs';
 
-async function handleSubmit(this : any, searchQuery :any) {
+interface wikiObject {
+  title: string;
+  url: string | URL;
+  summary: string;
+  image: string;
+  content: string | {
+      title: any;
+      content: string;
+      url: string;
+  }[];
+}
+
+/**
+ * Calls the MediaWiki api to fetch the closes title
+ * Uses WikiJS to fetch Wiki page info for that article
+ * Returns it as a wiki object
+ * @param searchQuery Google Vision's best guess
+ * @returns 
+ */
+async function handleSubmit(searchQuery :any) : Promise<wikiObject> {
   console.log("Wiki search query: ", searchQuery);  
 
   const endpoint = `https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchQuery}`;
@@ -11,35 +30,32 @@ async function handleSubmit(this : any, searchQuery :any) {
   
   const wikiObject = await getWiki(result.title);
 
-  console.log("fin");
   return wikiObject; 
 }
 
-async function getWiki(resultTitle : any) {
-  let url = await wiki().page(resultTitle).then((page : any) => page.url()).catch(() => console.log('Error fetching wiki URL'));
-  let summary = await wiki().page(resultTitle).then((page : any) => page.summary()).catch((error : any) => console.log('Error fetching wiki SUMMARY: ', error));
-  await sleep(2000); // TODO: Remove & find a permanent fix 
-  let imageList = await wiki().page(resultTitle).then((page : any) => page.images()).catch((error : any) => console.log('Error fetching wiki IMAGE LIST: ', error));
-  let image = getValidWikiImage(imageList);
-  await sleep(2000); // TODO: Remove & find a permanent fix 
-  let content = await wiki().page(resultTitle).then((page : any) => page.content()).catch((error : any) => console.log('Error fetching wiki CONTENT: ', error));
-  summary = summary ? shortenText(summary, 5) : undefined; 
-  content = content ? parseValidWikiContent(buildValidWikiContent(content), url) : undefined;  
+async function getWiki(resultTitle : string) {
+  const url = (await wiki().page(resultTitle)).url();
+  const summary = await (await wiki().page(resultTitle)).summary();
+  const imageList = await (await wiki().page(resultTitle)).images();
+  const image = getValidWikiImage(imageList);
+  const content = await (await wiki().page(resultTitle)).content();
+  const shortenedSummary = summary ? shortenText(summary, 5) : undefined; 
+  const parsedContent = content ? parseValidWikiContent(buildValidWikiContent(content), url) : undefined;  
 
   return {
     title: resultTitle, 
     url: url ? url : "Error Fetching Wiki URL",
-    summary: summary ? summary : "Error Fetching Summary",
+    summary: shortenedSummary ? shortenedSummary : "Error Fetching Summary",
     image: image ? image : "Error Fetching Image",
-    content: content ? content : "Error fetching Wiki Content"
+    content: parsedContent ? parsedContent : "Error fetching Wiki Content"
   }
 }
 
-function getValidWikiImage(wikiImageList : any) {
+function getValidWikiImage(wikiImageList : string[]) : string | undefined {
   let extension = '';
   for (let i = 0; i < wikiImageList.length; i++) {
     extension = wikiImageList[i].split(".").slice(-1)[0].toUpperCase(); 
-    if (extension === 'JPG' || extension === 'PNG') {
+    if (extension === 'JPG' || extension === 'PNG' || extension === 'SVG') {
       return wikiImageList[i];
     }
   }
@@ -99,10 +115,6 @@ function shortenText(originalText : any, maxLength : any) {
   }
   
   return shortenedText;
-}
-
-function sleep(ms : any) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export default handleSubmit; 
