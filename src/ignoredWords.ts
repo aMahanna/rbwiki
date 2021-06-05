@@ -14,7 +14,9 @@ const ignoredWords = [
   '[cd]',
   'soundtrack',
   '[german import]',
-  'label'
+  'label',
+  'amazon',
+  'ebay'
 ];
 
 export default ignoredWords; 
