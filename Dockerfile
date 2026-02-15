@@ -3,6 +3,9 @@ FROM node:15-alpine AS builder
 
 WORKDIR /app
 
+# Install compatible yarn version
+RUN npm install -g yarn@1.22.10
+
 # Copy package files
 COPY package.json yarn.lock ./
 
@@ -19,6 +22,9 @@ RUN yarn build
 FROM node:15-alpine
 
 WORKDIR /app
+
+# Install compatible yarn version
+RUN npm install -g yarn@1.22.10
 
 # Copy package files
 COPY package.json yarn.lock ./
