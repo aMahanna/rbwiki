@@ -10,8 +10,7 @@
     "watch:server": "yarn run clean:images && NODE_ENV=test nodemon ./dist/server.js --watch ./dist",
     "clean:dist": "rm -r -f dist",
     "clean:images": "rm -r -f public/images && mkdir public/images",
-    "build": "tsc",
-    "postinstall": "tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
