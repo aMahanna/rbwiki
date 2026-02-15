@@ -3,8 +3,8 @@ FROM node:15-alpine AS builder
 
 WORKDIR /app
 
-# Install compatible yarn version
-RUN npm install -g yarn@1.22.10
+# Install compatible yarn version (force overwrite)
+RUN npm install -g yarn@1.22.10 --force
 
 # Copy package files
 COPY package.json yarn.lock ./
@@ -23,8 +23,8 @@ FROM node:15-alpine
 
 WORKDIR /app
 
-# Install compatible yarn version
-RUN npm install -g yarn@1.22.10
+# Install compatible yarn version (force overwrite)
+RUN npm install -g yarn@1.22.10 --force
 
 # Copy package files
 COPY package.json yarn.lock ./

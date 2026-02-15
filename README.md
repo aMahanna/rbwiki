@@ -1,8 +1,8 @@
 # rbwiki
 
-A <a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Rube Goldberg Machine</a> for accessing condensed Wikipedia page content through photo recognition. 
+[rbwiki.mahanna.dev](https://rbwiki.mahanna.dev)
 
-A live demo can be found [here](https://rbwiki.mahanna.dev/).
+A <a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Rube Goldberg Machine</a> for accessing condensed Wikipedia page content through photo recognition. 
 
 Built with Express, using Typescript, JQuery, Handlebars, HTML, CSS, and the Google Cloud Vision & MediaWiki APIs.
 
