@@ -9,8 +9,8 @@ RUN npm install -g yarn@1.22.10 --force
 # Copy package files
 COPY package.json yarn.lock ./
 
-# Install dependencies
-RUN yarn install --frozen-lockfile
+# Install dependencies (ensure devDependencies are installed for build)
+RUN yarn install --frozen-lockfile --production=false
 
 # Copy source code
 COPY . .
